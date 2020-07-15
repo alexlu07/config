@@ -34,7 +34,6 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(html
-     perl5
      graphviz
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
@@ -47,8 +46,8 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      markdown
-     multiple-cursors
-     neotree
+     ;;multiple-cursors
+     ;;neotree
      org
      (shell :variables
             shell-default-height 30
@@ -479,24 +478,25 @@ before packages are loaded."
 
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-  (setq pdt-emacs-dir "/n/tech/emacs")
-  (setq pdt-emacs-site-lisp-dir (expand-file-name "site-lisp" pdt-emacs-dir))
-  (setq pdt-emacs-bin-dir (expand-file-name "bin" pdt-emacs-dir))
-  (let ((default-directory pdt-emacs-site-lisp-dir))
-    (load (expand-file-name "subdirs.el")))
-  (require 'pdt-basic)
+  ;; (setq pdt-emacs-dir "/n/tech/emacs")
+  ;; (setq pdt-emacs-site-lisp-dir (expand-file-name "site-lisp" pdt-emacs-dir))
+  ;; (setq pdt-emacs-bin-dir (expand-file-name "bin" pdt-emacs-dir))
+  ;; (let ((default-directory pdt-emacs-site-lisp-dir))
+  ;;   (load (expand-file-name "subdirs.el")))
+  ;; (require 'pdt-basic)
 
   (setq confirm-kill-emacs 'y-or-n-p)
   (if (display-graphic-p)
       (setq confirm-kill-emacs 'y-or-n-p))
 
 
-  (load-file "~/emacs/toggle/toggle-source.el")
-  (require 'toggle-source)
 
-  ;; (load_file "/n/tech/3rd/clang/3.8/install/x86_64.redhat.7/share/clang/clang-format.el")
-  (require 'clang-format)
-  (setq clang-format-executable "/n/tech/clang-format/bin/clang-format")
+  ;; (load-file "~/emacs/toggle/toggle-source.el")
+  ;; (require 'toggle-source)
+
+  ;; ;; (load_file "/n/tech/3rd/clang/3.8/install/x86_64.redhat.7/share/clang/clang-format.el")
+  ;; (require 'clang-format)
+  ;; (setq clang-format-executable "/n/tech/clang-format/bin/clang-format")
 
 
   (defun json-format ()
