@@ -1,0 +1,8 @@
+ # Always sort the files 
+--sort-files 
+--ignore-dir=build 
+--ignore-dir=build.nfs 
+--color-match=bold magenta 
+#Grr some people insist on putting stuff in .def files 
+--type-add=cc=.def 
+#--type-set make=GNUmakefile,.mk

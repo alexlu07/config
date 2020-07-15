@@ -1,0 +1,54 @@
+- clean: ['~']
+
+- link:
+    # ~/.jupyter:
+    #   force: true
+    #   path: jupyter
+    ~/.zshrc:
+      force: true
+      path: zshrc
+    # ~/.zshrc-custom:
+    #   force: true
+    #   path: zshrc-custom
+    # ~/.alias:
+    #   force: true
+    #   path: alias
+    # ~/.bashrc:
+    #   force: true
+    #   path: bashrc
+    # ~/.bash_profile:
+    #   force: true
+    #   path: bash_profile
+    ~/.spacemacs:
+        force: true
+        path: spacemacs
+    ~/.emacs.d:
+        force: true
+        path: ~/Documents/Alex/Programming/emacs.d
+    ~/.ackrc:
+      force: true
+      path: ackrc
+    # ~/.ssh/config:
+    #   force: true
+    #   path: ssh/config
+    # ~/.gdbinit:
+    #   force: true
+    #   path: gdbinit.simple
+    ~/.gitconfig:
+      force: true
+      path: gitconfig
+    ~/.fzf.key-bindings.zsh:
+      force: true
+      path: fzf.key-bindings.zsh
+    ~/.gitignore:
+      force: true
+      path: gitignore
+    # ~/.screenrc:
+    #   force: true
+    #   path: screenrc
+    # ~/.kube:
+    #   force: true
+    #   path: kube
+    # ~/.tmux.conf:
+    #   force: true
+    #   path: tmux.conf

@@ -1,0 +1,17 @@
+[core]
+    excludesfile = ~/.gitignore
+    editor = "/bin/emacs -q -nw"
+
+[user]
+    email = alexlu.manhasset@gmail.com
+    name = alexlu07
+
+[push]
+    default = simple
+
+[diff]
+    tool = gitdiff
+
+# [difftool "p4merge"]
+#     cmd = p4merge "$LOCAL" "$REMOTE"
+#     prompt = false
