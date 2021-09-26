@@ -1,0 +1,16 @@
+[core]
+    excludesfile = /u/junlu/.gitignore
+    editor = "/bin/emacs -q -nw"
+[user]
+    name = junlu
+    email = junlu@pdtpartners.com
+
+[push]
+    default = simple
+
+[diff]
+    tool = p4merge
+
+[difftool "p4merge"]
+    cmd = p4merge "$LOCAL" "$REMOTE"
+    prompt = false

@@ -19,36 +19,36 @@
     # ~/.bash_profile:
     #   force: true
     #   path: bash_profile
-    ~/.spacemacs:
-        force: true
-        path: spacemacs
+    # ~/.spacemacs:
+    #     force: true
+    #     path: spacemacs
     # ~/.emacs.d:
     #     force: true
-    #     path: ~/Documents/Alex/Programming/emacs.d
-    ~/.ackrc:
-      force: true
-      path: ackrc
+    #     path: emacs.d.spacemacs
+    # ~/.ackrc:
+    #   force: true
+    #   path: ackrc
     # ~/.ssh/config:
     #   force: true
     #   path: ssh/config
     # ~/.gdbinit:
     #   force: true
     #   path: gdbinit.simple
-    ~/.gitconfig:
-      force: true
-      path: gitconfig
-    ~/.fzf.key-bindings.zsh:
-      force: true
-      path: fzf.key-bindings.zsh
-    ~/.gitignore:
-      force: true
-      path: gitignore
+    # ~/.gitconfig:
+    #   force: true
+    #   path: gitconfig
+    # ~/.fzf.zsh:
+    #   force: true
+    #   path: fzf.zsh
+    # ~/.gitignore:
+    #   force: true
+    #   path: gitignore
     # ~/.screenrc:
     #   force: true
     #   path: screenrc
     # ~/.kube:
     #   force: true
     #   path: kube
-    ~/.tmux.conf:
-      force: true
-      path: tmux.conf
+    # ~/.tmux.conf:
+    #   force: true
+    #   path: tmux.conf

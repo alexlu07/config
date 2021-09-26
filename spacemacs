@@ -61,6 +61,7 @@ This function should only modify configuration layer settings."
      python
      shell-scripts
      javascript
+     java
      csv
      )
 
@@ -531,7 +532,7 @@ before packages are loaded."
   (setq isearch-allow-scroll t)
 
   (global-set-key (kbd "C-c C-c") 'comment-or-uncomment-region)
-  (global-set-key (kbd "C-c c") 'comment-region)
+  (global-set-key (kbd "C-c c") 'spacemacs/comment-or-uncomment-lines)
   (global-set-key (kbd "C-c u") 'uncomment-region)
 
 
