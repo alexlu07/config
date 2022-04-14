@@ -142,6 +142,12 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #alias
 alias rm="rm -i"
 alias cp="cp -i"
+slowleft() {command xdotool click --repeat 500000 --delay 1750 --window $(xdotool search --name "Minecraft") 1 &}
+slowright() {command xdotool click --repeat 500000 --delay 5000 --window $(xdotool search --name "Minecraft") 3 &}
+fastleft() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 1 &}
+fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 3 &}
+
+
 
 #fzf (fuzzy find)
 . ~/.fzf.key-bindings.zsh
@@ -156,8 +162,9 @@ alias cp="cp -i"
 cd ~/Documents/Alex/Programming
 
 # set mouse speed
-# xinput --set-prop 10 323 -0.9
-# xinput --set-prop 10 321 0
+xinput --set-prop 10 339 -0.9
+xinput --set-prop 10 337 0
+sudo logid
 
 ##################################################################333
 #

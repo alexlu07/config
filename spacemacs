@@ -535,6 +535,8 @@ before packages are loaded."
   (global-set-key (kbd "C-c c") 'spacemacs/comment-or-uncomment-lines)
   (global-set-key (kbd "C-c u") 'uncomment-region)
 
+  (global-set-key (kbd "M-n") 'forward-paragraph)
+  (global-set-key (kbd "M-p") 'backward-paragraph)
 
   (custom-set-faces)
   (add-hook 'c-mode-common-hook

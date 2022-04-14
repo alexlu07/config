@@ -16,4 +16,4 @@
 #     cmd = p4merge "$LOCAL" "$REMOTE"
 #     prompt = false
 [credential]
-	helper = cache --timeout=86400
+	helper = cache --timeout=8640000
