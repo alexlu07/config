@@ -3,8 +3,8 @@
     editor = "/bin/emacs -q -nw"
 
 [user]
-    email = alexlu.manhasset@gmail.com
-    name = alexlu07
+	email = alexlu.manhasset@gmail.com
+	name = alexlu07
 
 [push]
     default = simple

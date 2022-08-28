@@ -1,6 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=.:/home/alexlu/bin:/usr/local/bin:$PATH
 
+export LD_LIBRARY_PATH=/home/alexlu/.mujoco/mujoco210/bin
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia
+export PATH="$LD_LIBRARY_PATH:$PATH"
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
+
+
 # Path to your oh-my-zsh installation.
 export ZSH="/home/alexlu/.oh-my-zsh"
 
@@ -162,9 +168,10 @@ fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool
 cd ~/Documents/Alex/Programming
 
 # set mouse speed
-xinput --set-prop 10 339 -0.9
-xinput --set-prop 10 337 0
-sudo logid
+xinput --set-prop 9 339 -0.9
+xinput --set-prop 9 337 0
+
+# sudo logid
 
 ##################################################################333
 #
