@@ -1,0 +1,14 @@
+evdev:input:b0003v046Dp4082e0111*
+ KEYBOARD_KEY_7002b=reserved
+ KEYBOARD_KEY_700e3=rightshift
+ 
+# RUN:
+# ln -srf 99-mouse-remap.hwdb /etc/udev/hwdb.d/99-mouse-remap.hwdb
+# sudo systemd-hwdb update
+# sudo udevadm trigger
+
+# THESE BUTTONS ARE BOTH THE MOUSE THUMB BUTTONS (the button triggered two scan codes for some reason, so one was set to reserved)
+# LINKS TO POSTS USED:
+# https://askubuntu.com/questions/1145057/remapping-mouse-buttons-to-keyboard-keys
+# https://www.reddit.com/r/linux_gaming/comments/nypsi1/updated_guide_to_remapping_keys_on_linux_using/
+# https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h

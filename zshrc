@@ -1,10 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=.:/home/alexlu/bin:/usr/local/bin:$PATH
 
-export LD_LIBRARY_PATH=/home/alexlu/.mujoco/mujoco210/bin
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia
-export PATH="$LD_LIBRARY_PATH:$PATH"
-export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
+# export LD_LIBRARY_PATH=/home/alexlu/.mujoco/mujoco210/bin
+# export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia
+# export PATH="$LD_LIBRARY_PATH:$PATH"
+# export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
 
 
 # Path to your oh-my-zsh installation.
@@ -148,12 +148,18 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #alias
 alias rm="rm -i"
 alias cp="cp -i"
-slowleft() {command xdotool click --repeat 500000 --delay 1750 --window $(xdotool search --name "Minecraft") 1 &}
-slowright() {command xdotool click --repeat 500000 --delay 5000 --window $(xdotool search --name "Minecraft") 3 &}
-fastleft() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 1 &}
-fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 3 &}
+slowleft() {command xdotool click --repeat 500000 --delay 1750 --window $(xdotool search --name "Minecraft") 1}
+slowright() {command xdotool click --repeat 500000 --delay 5000 --window $(xdotool search --name "Minecraft") 3}
+fastleft() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 1}
+fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 3}
 
-
+restartaudio() {
+  systemctl --user kill pulseaudio.socket;
+  systemctl --user kill pulseaudio.service;
+  systemctl --user kill pulseaudio.socket;
+  pulseaudio -k;
+  pulseaudio -D;
+}
 
 #fzf (fuzzy find)
 . ~/.fzf.key-bindings.zsh
@@ -165,11 +171,11 @@ fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool
 # source ~/.fzf.zsh
 
 
-cd ~/Documents/Alex/Programming
+cd ~/Documents
 
 # set mouse speed
-xinput --set-prop 9 339 -0.9
-xinput --set-prop 9 337 0
+xinput --set-prop 13 302 -0.9
+
 
 # sudo logid
 
@@ -235,3 +241,19 @@ export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 export SHELL='/usr/bin/zsh'
 
 # JINA_CLI_END
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/alexlu/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
