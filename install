@@ -13,3 +13,11 @@ git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+# install vscode extension
+if command -v code &> /dev/null; then
+    echo "Installing VSCode extensions"
+    code --install-extension vscode-editor-env-0.0.1.vsi
+else
+    echo "VSCode is not installed, skipping extension installation."
+fi

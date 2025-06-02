@@ -160,11 +160,24 @@ restartaudio() {
   pulseaudio -D;
 }
 
+# vscode auto directory
+
+here() {
+    # if file exists
+    if [ -f /tmp/editor_path.txt ]; then
+        cd $(dirname $(cat /tmp/editor_path.txt))
+    fi
+}
+
+if [ "$TERM_PROGRAM" = "vscode" ]; then
+    here
+else
+    cd ~/Desktop
+fi
+
 # enable fzf key bindings or smth
 # https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
 source <(fzf --zsh)
-
-cd ~/Desktop
 
 # set mouse speed
 # xinput --set-prop 13 302 -0.9
