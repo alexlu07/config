@@ -130,7 +130,7 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
+# eval "$(dircolors -b)"
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
@@ -160,17 +160,11 @@ restartaudio() {
   pulseaudio -D;
 }
 
-#fzf (fuzzy find)
-#. ~/.fzf.key-bindings.zsh
+# enable fzf key bindings or smth
+# https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
+source <(fzf --zsh)
 
-
-# #fzf
-# #We don't seem to have fzf-tmux installed
-# export FZF_TMUX=0
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-
-cd ~/Documents
+cd ~/Desktop
 
 # set mouse speed
 # xinput --set-prop 13 302 -0.9
@@ -255,3 +249,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
