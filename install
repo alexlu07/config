@@ -17,7 +17,7 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 # install vscode extension
 if command -v code &> /dev/null; then
     echo "Installing VSCode extensions"
-    code --install-extension vscode-editor-env-0.0.1.vsi
+    code --install-extension alexlu07.vscode-pathfinder
 else
     echo "VSCode is not installed, skipping extension installation."
 fi
