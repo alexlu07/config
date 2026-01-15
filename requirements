@@ -1,0 +1,51 @@
+#!/usr//env bash
+
+set -euo pipefail
+
+# brew
+if ! command -v brew >/dev/null 2>&1; then
+    echo "Installing Homebrew"
+    NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    echo "Installed Homebrew successfully"
+else
+    echo "Homebrew is already installed"
+fi
+
+# zsh
+if ! command -v zsh >/dev/null 2>&1; then
+    echo "Installing zsh"
+    brew install zsh >/dev/null
+    echo "Installed zsh sucessfully"
+else
+    echo "zsh is already installed"
+fi
+
+# oh-my-zsh
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh"
+    RUNZSH=no CHSH=yes KEEP_ZSHRC=no sh -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+    >/dev/null
+    echo "Installed Oh My Zsh successfully"
+else
+    echo "Oh My Zsh is already installed"
+fi
+
+# fzf
+if ! command -v fzf >/dev/null 2>&1; then
+    echo "Installing fzf"
+    brew install fzf >/dev/null
+    echo "Installed fzf sucessfully"
+else
+    echo "fzf is already installed"
+fi
+
+# tmux
+if ! command -v tmux >/dev/null 2>&1; then
+    echo "Installing tmux"
+    brew install tmux >/dev/null
+    echo "Installed tmux sucessfully"
+else
+    echo "tmux is already installed"
+fi

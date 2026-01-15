@@ -198,9 +198,9 @@ source <(fzf --zsh)
 #
 #    2012/1/25 - Initial Revision
 #
-export EDITOR='emacs'
-export VISUAL='emacs'
-set -o emacs
+export EDITOR='vi'
+export VISUAL='vi'
+set -o vi
 
 ## Fancy colors for git prompt(clean/dirty)
 #source /u/rushi/git/zsh-git-prompt/zshrc.sh
@@ -275,3 +275,14 @@ export NVM_DIR="$HOME/.nvm"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+
+# Auto attach to tmux if not already inside one
+if [ "$TERM_PROGRAM" != "vscode" ]; then
+	if command -v tmux &>/dev/null; then
+		if [ -z "$TMUX" ]; then
+			tmux attach -t main 2>/dev/null || tmux new -s main
+		fi
+	fi
+fi
+
