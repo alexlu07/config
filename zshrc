@@ -163,14 +163,19 @@ restartaudio() {
 # vscode auto directory
 
 here() {
-    # if file exists
     if [ -f /tmp/editor_path.txt ]; then
-        cd $(dirname $(cat /tmp/editor_path.txt))
+        cd "$(dirname "$(cat /tmp/editor_path.txt)")"
+    fi
+}
+
+home() {
+    if [ -f /tmp/folder_path.txt ]; then
+        cd "$(cat /tmp/folder_path.txt)"
     fi
 }
 
 if [ "$TERM_PROGRAM" = "vscode" ]; then
-    here
+    home
 else
     cd ~/Desktop
 fi
@@ -243,20 +248,20 @@ $ '
 # # session-wise fix
 # ulimit -n 4096
 # export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-export SHELL='/usr/bin/zsh'
+export SHELL='/bin/zsh'
 
 # JINA_CLI_END
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/alexlu/miniconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/alexlu/miniconda3/bin:$PATH"
+        export PATH="/Users/alexlu/miniconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -266,3 +271,7 @@ unset __conda_setup
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
