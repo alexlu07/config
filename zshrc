@@ -147,10 +147,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #alias
 alias rm="rm -i"
 alias cp="cp -i"
-slowleft() {command xdotool click --repeat 500000 --delay 1750 --window $(xdotool search --name "Minecraft") 1}
-slowright() {command xdotool click --repeat 500000 --delay 5000 --window $(xdotool search --name "Minecraft") 3}
-fastleft() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 1}
-fastright() {command xdotool click --repeat 500000 --delay 18 --window $(xdotool search --name "Minecraft") 3}
+
+# fixes
 
 restartaudio() {
   systemctl --user kill pulseaudio.socket;
@@ -158,6 +156,14 @@ restartaudio() {
   systemctl --user kill pulseaudio.socket;
   pulseaudio -k;
   pulseaudio -D;
+}
+
+fixhistory() {
+    cd ~
+    mv .zsh_history .zsh_history_bad
+    strings .zsh_history_bad > .zsh_history
+    fc -R .zsh_history
+    rm ~/.zsh_history_bad
 }
 
 # vscode auto directory
