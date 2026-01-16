@@ -14,6 +14,10 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
 
+# init conda
+source ~/miniconda3/bin/activate
+conda init --all
+
 # install vscode extension
 if command -v code &> /dev/null; then
     echo "Installing VSCode extensions"

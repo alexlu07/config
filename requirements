@@ -49,3 +49,17 @@ if ! command -v tmux >/dev/null 2>&1; then
 else
     echo "tmux is already installed"
 fi
+
+
+#conda
+if ! command -v conda >/dev/null 2>&1; then
+    echo "Installing Miniconda3"
+    mkdir -p ~/miniconda3
+    curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+    bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+    rm ~/miniconda3/miniconda.sh
+    echo "Installed Miniconda3 sucessfully"
+else
+    echo "Miniconda3 is already installed"
+fi
+
