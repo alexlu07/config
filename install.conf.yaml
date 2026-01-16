@@ -7,6 +7,9 @@
     ~/.ackrc:
       force: true
       path: ackrc
+    ~/.vimrc:
+      force: true
+      path: vimrc
     ~/.gitconfig:
       force: true
       path: gitconfig

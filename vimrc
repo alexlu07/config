@@ -1,0 +1,7 @@
+set number
+set relativenumber
+
+set tabstop=4      " Sets the width of a tab character to 4 spaces for display
+set shiftwidth=4   " Sets the number of spaces for indentation (e.g., when using autoindent or '>>')
+set expandtab      " Converts tabs to spaces when inserting indentation
+set softtabstop=4  " Specifies the number of spaces to add/remove when pressing Tab/Backspace
