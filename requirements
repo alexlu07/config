@@ -41,6 +41,15 @@ else
     echo "fzf is already installed"
 fi
 
+# reattach-to-user-namespace for tmux clipboard
+if ! command -v reattach-to-user-namespace >/dev/null 2>&1; then
+    echo "Installing reattach-to-user-namespace"
+    brew install reattach-to-user-namespace >/dev/null
+    echo "Installed reattach-to-user-namespace sucessfully"
+else
+    echo "reattach-to-user-namespace is already installed"
+fi
+
 # tmux
 if ! command -v tmux >/dev/null 2>&1; then
     echo "Installing tmux"
