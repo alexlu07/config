@@ -3,6 +3,7 @@ keybinds {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
+        bind "Alt e" { EditScrollback; }
     }
     locked {
         bind "Ctrl g" { SwitchToMode "Normal"; }
@@ -184,7 +185,7 @@ keybinds {
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
-        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Alt `" { ToggleFloatingPanes; }
         bind "Alt n" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
         bind "Alt o" { MoveTab "Right"; }
@@ -398,6 +399,11 @@ serialize_pane_viewport true
 // Default: $EDITOR or $VISUAL
 //
 // scrollback_editor "/usr/bin/vim"
+#====== LINUX ======
+scrollback_editor "/home/alexlu/.config/zellij/zellij_scrollback.sh"
+#====== MAC ======
+scrollback_editor "/Users/alexlu/.config/zellij/zellij_scrollback.sh"
+#====== END ======
 
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)

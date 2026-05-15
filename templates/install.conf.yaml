@@ -26,3 +26,6 @@
     ~/.config/zellij/config.kdl:
       force: true
       path: configs/zellij.kdl
+    ~/.config/zellij/zellij_scrollback.sh:
+      force: true
+      path: configs/zellij_scrollback.sh

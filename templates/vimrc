@@ -12,8 +12,3 @@ syntax on
 nnoremap <C-j> 3jzz
 nnoremap <C-k> 3kzz
 
-#====== LINUX ======
-set clipboard=unnamedplus
-#====== MAC ======
-set clipboard=unnamed
-#====== END ======
