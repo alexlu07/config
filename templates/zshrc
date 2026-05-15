@@ -146,9 +146,30 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # bin
 export PATH="$HOME/bin:$PATH"
 
-#alias
+# alias
 alias rm="rm -i"
 alias cp="cp -i"
+
+#====== LINUX ======
+alias trash="gio trash"
+
+# autoclickers
+
+setwindow() {
+    termwindow=$(xdotool getactivewindow)
+    currwindow=$(xdotool getactivewindow)
+    echo "Select the desired window"
+    while [ $termwindow = $currwindow ]; do
+        currwindow=$(xdotool getactivewindow)
+    done
+    echo "Selected window number $currwindow: $(xdotool getwindowname $currwindow)"
+}
+
+slowleft() {command xdotool click --repeat 500000 --delay 1750 --window $currwindow 1}
+slowright() {command xdotool click --repeat 500000 --delay 5000 --window $currwindow 3}
+fastleft() {command xdotool click --repeat 500000 --delay 18 --window $currwindow 1}
+fastright() {command xdotool click --repeat 500000 --delay 18 --window $currwindow 3}
+#====== END ======
 
 # fixes
 
@@ -190,11 +211,15 @@ fi
 
 # enable fzf key bindings or smth
 # https://github.com/junegunn/fzf?tab=readme-ov-file#setting-up-shell-integration
+
+#====== LINUX ======
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#====== MAC ======
 source <(fzf --zsh)
+#====== END ======
 
 # set mouse speed
 # xinput --set-prop 13 302 -0.9
-
 
 # sudo logid
 
@@ -262,6 +287,18 @@ export SHELL='/bin/zsh'
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
+#====== LINUX ======
+__conda_setup="$('/home/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/alexlu/miniconda3/bin:$PATH"
+    fi
+fi
+#====== MAC ======
 __conda_setup="$('/Users/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -272,6 +309,7 @@ else
         export PATH="/Users/alexlu/miniconda3/bin:$PATH"
     fi
 fi
+#====== END ======
 unset __conda_setup
 # <<< conda initialize <<<
 
@@ -284,13 +322,11 @@ export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-
-# Auto attach to tmux if not already inside one
+# Auto attach to zellij if not already inside one
 if [ "$TERM_PROGRAM" != "vscode" ]; then
-	if command -v tmux &>/dev/null; then
-		if [ -z "$TMUX" ]; then
-			tmux attach -t main 2>/dev/null || tmux new -s main
-		fi
-	fi
+    if command -v zellij &>/dev/null; then
+        if [ -z "$ZELLIJ" ]; then
+            zellij attach main 2>/dev/null || zellij -s main
+        fi
+    fi
 fi
-

@@ -2,23 +2,48 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
 DOTBOT_DIR="dotbot"
-
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Detect OS
+OS=$(uname -s)
+[ "$OS" = "Darwin" ] && TAG="mac" || TAG="linux"
+
+# Generate OS-specific configs from templates/
+echo "Generating configs for: $TAG"
+mkdir -p "${BASEDIR}/configs"
+for src in "${BASEDIR}"/templates/*; do
+    name=$(basename "$src")
+    awk -v os="$TAG" '
+        /^#=+ [A-Z]+ =+/ {
+            tag = tolower($2)
+            if (tag == "end") { skip = 0 }
+            else { skip = (tag != os) }
+            next
+        }
+        !skip { print }
+    ' "$src" > "${BASEDIR}/configs/$name"
+done
+chmod +x "${BASEDIR}/configs/requirements" "${BASEDIR}"/configs/*.sh
+echo "  configs/ generated"
+
+# Install dependencies
+bash "${BASEDIR}/configs/requirements"
+
+# Init dotbot submodule
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+# Symlink configs
+"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "configs/install.conf.yaml" "${@}"
 
-# init conda
+# Init conda shell integration
 source ~/miniconda3/bin/activate
 conda init --all
 
-# install vscode extension
+# Install VSCode extension
 if command -v code &> /dev/null; then
     echo "Installing VSCode extensions"
     code --install-extension alexlu07.vscode-pathfinder

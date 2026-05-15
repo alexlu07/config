@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+#====== MAC ======
 # brew
 if ! command -v brew >/dev/null 2>&1; then
     echo "Installing Homebrew"
@@ -11,11 +12,18 @@ if ! command -v brew >/dev/null 2>&1; then
 else
     echo "Homebrew is already installed"
 fi
+#====== END ======
 
 # zsh
 if ! command -v zsh >/dev/null 2>&1; then
     echo "Installing zsh"
+
+#====== LINUX ======
+    sudo apt install zsh >/dev/null
+#====== MAC ======
     brew install zsh >/dev/null
+#====== END ======
+
     echo "Installed zsh sucessfully"
 else
     echo "zsh is already installed"
@@ -35,12 +43,20 @@ fi
 # fzf
 if ! command -v fzf >/dev/null 2>&1; then
     echo "Installing fzf"
+
+#====== LINUX ======
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all >/dev/null
+#====== MAC ======
     brew install fzf >/dev/null
+#====== END ======
+
     echo "Installed fzf sucessfully"
 else
     echo "fzf is already installed"
 fi
 
+#====== MAC ======
 # reattach-to-user-namespace for tmux clipboard
 if ! command -v reattach-to-user-namespace >/dev/null 2>&1; then
     echo "Installing reattach-to-user-namespace"
@@ -49,26 +65,37 @@ if ! command -v reattach-to-user-namespace >/dev/null 2>&1; then
 else
     echo "reattach-to-user-namespace is already installed"
 fi
+#====== END ======
 
 # tmux
 if ! command -v tmux >/dev/null 2>&1; then
     echo "Installing tmux"
+
+#====== LINUX ======
+    sudo apt install tmux >/dev/null
+#====== MAC ======
     brew install tmux >/dev/null
+#====== END ======
+
     echo "Installed tmux sucessfully"
 else
     echo "tmux is already installed"
 fi
 
-
 #conda
 if ! command -v conda >/dev/null 2>&1; then
     echo "Installing Miniconda3"
     mkdir -p ~/miniconda3
+
+#====== LINUX ======
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh -q
+#====== MAC ======
     curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o ~/miniconda3/miniconda.sh
+#====== END ======
+
     bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
     rm ~/miniconda3/miniconda.sh
     echo "Installed Miniconda3 sucessfully"
 else
     echo "Miniconda3 is already installed"
 fi
-

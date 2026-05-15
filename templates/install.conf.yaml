@@ -1,0 +1,28 @@
+- clean: ['~']
+
+- link:
+    ~/.zshrc:
+      force: true
+      path: configs/zshrc
+    ~/.ackrc:
+      force: true
+      path: configs/ackrc
+    ~/.vimrc:
+      force: true
+      path: configs/vimrc
+    ~/.gitconfig:
+      force: true
+      path: configs/gitconfig
+    ~/.gitignore:
+      force: true
+      path: configs/gitignore
+    ~/.tmux.conf:
+      force: true
+      path: configs/tmux.conf
+    # ~/.tmux/tmux_lines.sh:
+    #   force: true
+    #   path: configs/tmux_lines.sh
+    #   create: true
+    ~/.config/zellij/config.kdl:
+      force: true
+      path: configs/zellij.kdl
