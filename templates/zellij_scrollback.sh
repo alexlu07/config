@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 exec vim \
-  -c 'set nonumber norelativenumber termguicolors' \
+  -c 'set nonumber norelativenumber' \
   -c 'nnoremap q :qa!<CR>' \
   -c 'nnoremap y "+y:qa!<CR>' \
   -c 'vnoremap y "+y:qa!<CR>' \

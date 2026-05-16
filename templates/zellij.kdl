@@ -186,6 +186,7 @@ keybinds {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
         bind "Alt `" { ToggleFloatingPanes; }
+        unbind "Alt f"
         bind "Alt n" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
         bind "Alt o" { MoveTab "Right"; }
@@ -339,7 +340,7 @@ serialize_pane_viewport true
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-// theme "default"
+theme "ayu_dark"
 
 // The name of the default layout to load on startup
 // Default: "default"

@@ -29,3 +29,7 @@
     ~/.config/zellij/zellij_scrollback.sh:
       force: true
       path: configs/zellij_scrollback.sh
+    ~/.config/ghostty/config:
+      force: true
+      path: configs/ghostty
+      create: true
