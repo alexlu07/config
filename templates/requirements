@@ -2,6 +2,22 @@
 
 set -euo pipefail
 
+# ghostty
+if ! command -v ghostty >/dev/null 2>&1; then
+    echo "Installing Ghostty"
+
+#====== LINUX ======
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+#====== MAC ======
+    open "https://ghostty.org/download"
+
+    echo
+    read -r -p "Press Enter after Ghostty is installed to continue..."
+#====== END ======
+else
+    echo "Ghostty is already installed"
+fi
+
 #====== MAC ======
 # brew
 if ! command -v brew >/dev/null 2>&1; then
@@ -66,6 +82,21 @@ else
     echo "reattach-to-user-namespace is already installed"
 fi
 #====== END ======
+
+# Zellij
+if ! command -v zellij >/dev/null 2>&1; then
+    echo "Installing Zellij"
+
+#====== LINUX ======
+    sudo snap install zellij --classic >/dev/null
+#====== MAC ======
+    brew install zellij >/dev/null
+#====== END ======
+
+    echo "Installed Zellij sucessfully"
+else
+    echo "Zellij is already installed"
+fi
 
 # tmux
 if ! command -v tmux >/dev/null 2>&1; then
