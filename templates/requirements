@@ -7,7 +7,7 @@ if ! command -v ghostty >/dev/null 2>&1; then
     echo "Installing Ghostty"
 
 #====== LINUX ======
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+    sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)" > /dev/null
 #====== MAC ======
     open "https://ghostty.org/download"
 
