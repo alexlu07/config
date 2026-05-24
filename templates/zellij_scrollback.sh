@@ -7,6 +7,6 @@ term_opts="{'close_cb': {_ -> $close_cb}, 'curwin': 1}"
 exec vim \
   -c 'set nonumber norelativenumber' \
   -c 'nnoremap q :qa!<CR>' \
-  -c 'nnoremap y "+y:qa!<CR>' \
-  -c 'vnoremap y "+y:qa!<CR>' \
+  -c 'nnoremap y y:OSCYankRegister<CR>:qa!<CR>' \
+  -c 'vnoremap y y:OSCYankRegister<CR>:qa!<CR>' \
   -c "call term_start(['cat', '$1'], $term_opts)"
