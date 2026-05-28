@@ -13,8 +13,9 @@ OS=$(uname -s)
 # Generate OS-specific configs from templates/
 echo "Generating configs for: $TAG"
 mkdir -p "${BASEDIR}/configs"
-for src in "${BASEDIR}"/templates/*; do
-    name=$(basename "$src")
+
+process_file() {
+    local src="$1" dst="$2"
     awk -v os="$TAG" '
         /^#=+ [A-Z]+ =+/ {
             tag = tolower($2)
@@ -23,9 +24,33 @@ for src in "${BASEDIR}"/templates/*; do
             next
         }
         !skip { print }
-    ' "$src" > "${BASEDIR}/configs/$name"
+    ' "$src" > "$dst"
+}
+
+process_dir() {
+    local src="$1" dst="$2"
+    mkdir -p "$dst"
+    for entry in "$src"/*; do
+        [ -e "$entry" ] || continue
+        local name; name=$(basename "$entry")
+        if [ -d "$entry" ]; then
+            process_dir "$entry" "$dst/$name"
+        else
+            process_file "$entry" "$dst/$name"
+        fi
+    done
+}
+
+for src in "${BASEDIR}"/templates/*; do
+    name=$(basename "$src")
+    if [ -d "$src" ]; then
+        process_dir "$src" "${BASEDIR}/configs/$name"
+    else
+        process_file "$src" "${BASEDIR}/configs/$name"
+    fi
 done
-chmod +x "${BASEDIR}/configs/requirements" "${BASEDIR}"/configs/*.sh
+chmod +x "${BASEDIR}/configs/requirements"
+find "${BASEDIR}/configs" -name "*.sh" -exec chmod +x {} \;
 echo "  configs/ generated"
 
 # Install dependencies
