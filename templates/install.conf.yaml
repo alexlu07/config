@@ -23,12 +23,9 @@
     #   force: true
     #   path: configs/tmux_lines.sh
     #   create: true
-    ~/.config/zellij/config.kdl:
+    ~/.config/zellij:
       force: true
-      path: configs/zellij.kdl
-    ~/.config/zellij/zellij_scrollback.sh:
-      force: true
-      path: configs/zellij_scrollback.sh
+      path: configs/zellij
     ~/.config/ghostty/config:
       force: true
       path: configs/ghostty

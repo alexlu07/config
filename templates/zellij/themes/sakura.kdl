@@ -1,0 +1,120 @@
+themes {
+    sakura {
+        text_unselected {
+            base 235 225 245 // #ebe1f5
+            background 10 12 18 // #0a0c12
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        text_selected {
+            base 235 225 245 // #ebe1f5
+            background 34 22 48 // #221630
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        ribbon_selected {
+            base 10 12 18 // #0a0c12
+            background 255 120 220 // #ff78dc
+            emphasis_0 255 0 0 // #ff0000
+            emphasis_1 255 60 180 // #ff3cb4
+            emphasis_2 120 70 255 // #7846ff
+            emphasis_3 0 255 0 // #00ff00
+        }
+        ribbon_unselected {
+            base 10 12 18 // #0a0c12
+            background 191 182 182 // #bfb6b6
+            emphasis_0 255 0 0 // #ff0000
+            emphasis_1 235 225 245 // #ebe1f5
+            emphasis_2 0 255 0 // #00ff00
+            emphasis_3 120 70 255 // #7846ff
+        }
+        table_title {
+            base 255 120 220 // #ff78dc
+            background 0
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        table_cell_selected {
+            base 235 225 245 // #ebe1f5
+            background 34 22 48 // #221630
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        table_cell_unselected {
+            base 235 225 245 // #ebe1f5
+            background 10 12 18 // #0a0c12
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        list_selected {
+            base 235 225 245 // #ebe1f5
+            background 34 22 48 // #221630
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        list_unselected {
+            base 235 225 245 // #ebe1f5
+            background 10 12 18 // #0a0c12
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 255 120 220 // #ff78dc
+            emphasis_3 120 70 255 // #7846ff
+        }
+        frame_selected {
+            base 255 120 220 // #ff78dc
+            background 0
+            emphasis_0 255 60 180 // #ff3cb4
+            emphasis_1 180 80 255 // #b450ff
+            emphasis_2 120 70 255 // #7846ff
+            emphasis_3 0
+        }
+        frame_highlight {
+            base 255 60 180 // #ff3cb4
+            background 0
+            emphasis_0 120 70 255 // #7846ff
+            emphasis_1 255 60 180 // #ff3cb4
+            emphasis_2 255 60 180 // #ff3cb4
+            emphasis_3 255 60 180 // #ff3cb4
+        }
+        exit_code_success {
+            base 255 120 220 // #ff78dc
+            background 0
+            emphasis_0 180 80 255 // #b450ff
+            emphasis_1 10 12 18 // #0a0c12
+            emphasis_2 120 70 255 // #7846ff
+            emphasis_3 0 255 0 // #00ff00
+        }
+        exit_code_error {
+            base 255 0 0 // #ff0000
+            background 0
+            emphasis_0 0 0 255 // #0000ff
+            emphasis_1 0
+            emphasis_2 0
+            emphasis_3 0
+        }
+        multiplayer_user_colors {
+            player_1 120 70 255 // #7846ff
+            player_2 0 255 0 // #00ff00
+            player_3 0
+            player_4 0 0 255 // #0000ff
+            player_5 180 80 255 // #b450ff
+            player_6 0
+            player_7 255 0 0 // #ff0000
+            player_8 0
+            player_9 0
+            player_10 0
+        }
+    }
+}

@@ -106,10 +106,10 @@ source $ZSH/oh-my-zsh.sh
 autoload -Uz promptinit
 promptinit
 #prompt clint
-prompt adam1 none green green
+prompt adam1 none magenta magenta
 
-# Use emacs keybindings even if our EDITOR is set to vi
-bindkey -e
+# use vim keys
+bindkey -v
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000000

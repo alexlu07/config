@@ -4,7 +4,7 @@ keybinds {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
         bind "Alt e" { EditScrollback { ansi true; }; }
-        bind "Alt s" { 
+        bind "Alt s" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
@@ -347,8 +347,9 @@ serialize_pane_viewport true
 
 // Choose the theme that is specified in the themes section.
 // Default: default
-//
-theme "ayu_dark"
+
+import "~/.config/zellij/themes/sakura.kdl"
+theme "sakura"
 
 // The name of the default layout to load on startup
 // Default: "default"
