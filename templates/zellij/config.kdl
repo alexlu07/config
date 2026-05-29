@@ -1,9 +1,10 @@
 // If you'd like to override the default keybindings completely, be sure to change "keybinds" to "keybinds clear-defaults=true"
-keybinds {
+keybinds clear-defaults=true {
     normal {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
         bind "Alt e" { EditScrollback { ansi true; }; }
+        bind "Alt t" { NewTab; SwitchToMode "Normal"; }
         bind "Alt s" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
@@ -56,8 +57,7 @@ keybinds {
         bind "l" "Right" { MovePane "Right"; }
     }
     tab {
-        bind "Alt t" { SwitchToMode "Normal"; }
-        unbind "Ctrl t"
+        bind "Ctrl t" { SwitchToMode "Normal"; }
         bind "r" { SwitchToMode "RenameTab"; TabNameInput 0; }
         bind "h" "Left" "Up" "k" { GoToPreviousTab; }
         bind "l" "Right" "Down" "j" { GoToNextTab; }
@@ -193,7 +193,6 @@ keybinds {
         bind "Ctrl g" { TogglePaneFrames; SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
         bind "Alt `" { ToggleFloatingPanes; }
-        unbind "Alt f"
         bind "Alt n" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
         bind "Alt o" { MoveTab "Right"; }
@@ -209,7 +208,7 @@ keybinds {
         bind "Alt Shift p" { ToggleGroupMarking; }
     }
     shared_except "normal" "locked" {
-        bind "Enter" "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" "Esc" "Ctrl c" { SwitchToMode "Normal"; }
     }
     shared_except "pane" "locked" {
         bind "Ctrl p" { SwitchToMode "Pane"; }
@@ -224,15 +223,14 @@ keybinds {
         bind "Ctrl o" { SwitchToMode "Session"; }
     }
     shared_except "tab" "locked" {
-        bind "Alt t" { SwitchToMode "Tab"; }
-        unbind "Ctrl t"
+        bind "Ctrl t" { SwitchToMode "Tab"; }
     }
     shared_except "move" "locked" {
         bind "Ctrl h" { SwitchToMode "Move"; }
     }
-    shared_except "tmux" "locked" {
-        bind "Ctrl b" { SwitchToMode "Tmux"; }
-    }
+//     shared_except "tmux" "locked" {
+//         bind "Ctrl b" { SwitchToMode "Tmux"; }
+//     }
 }
 
 // Plugin aliases - can be used to change the implementation of Zellij
