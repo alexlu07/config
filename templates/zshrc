@@ -148,6 +148,10 @@ export PATH="$HOME/.local/bin:$PATH"
 # bin
 export PATH="$HOME/bin:$PATH"
 
+# rust + bob-managed neovim
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+
 
 # alias
 alias rm="rm -i"
@@ -234,8 +238,10 @@ source <(fzf --zsh)
 #
 #    2012/1/25 - Initial Revision
 #
-export EDITOR='vi'
-export VISUAL='vi'
+export EDITOR='nvim'
+export VISUAL='nvim'
+alias vim='nvim'
+alias vi='nvim'
 set -o vi
 
 ## Fancy colors for git prompt(clean/dirty)

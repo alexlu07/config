@@ -26,6 +26,10 @@
     ~/.config/zellij:
       force: true
       path: configs/zellij
+    ~/.config/nvim:
+      force: true
+      path: configs/nvim
+      create: true
     ~/.config/ghostty/config:
       force: true
       path: configs/ghostty

@@ -130,3 +130,29 @@ if ! command -v conda >/dev/null 2>&1; then
 else
     echo "Miniconda3 is already installed"
 fi
+
+# rust (rustup) -- installs entirely under $HOME, no sudo required
+if ! command -v cargo >/dev/null 2>&1; then
+    echo "Installing rustup"
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    echo "Installed rustup successfully"
+else
+    echo "rustup is already installed"
+fi
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# bob (neovim version manager) -- downloads prebuilt neovim, no sudo
+if ! command -v bob >/dev/null 2>&1; then
+    echo "Installing bob"
+    cargo install bob-nvim
+    echo "Installed bob successfully"
+else
+    echo "bob is already installed"
+fi
+bob use stable
+
+# neovim tooling: rg = telescope live_grep, fd = telescope find_files,
+# tree-sitter = nvim-treesitter parser compilation (TSUpdate)
+command -v rg >/dev/null 2>&1 || cargo install ripgrep
+command -v fd >/dev/null 2>&1 || cargo install fd-find
+command -v tree-sitter >/dev/null 2>&1 || cargo install tree-sitter-cli

@@ -42,7 +42,17 @@ Dotbot is called with `configs/install.conf.yaml`, which links from `configs/` f
 | `requirements` | package manager (apt vs brew), fzf install method, reattach (mac), miniconda URL/command |
 | `install.conf.yaml` | zellij.kdl link (mac only) |
 
-Static files with no OS differences (just copied): `vimrc`, `ackrc`, `gitconfig`, `gitignore`, `tmux_lines.sh`, `zellij.kdl`
+Static files with no OS differences (just copied): `vimrc`, `ackrc`, `gitconfig`, `gitignore`, `tmux_lines.sh`, `zellij.kdl`, `nvim/init.lua`
+
+## Neovim
+
+Editor is Neovim, configured via `templates/nvim/init.lua` (linked to `~/.config/nvim`). The config is a customized [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim): a single owned `init.lua` using the built-in `vim.pack` plugin manager (requires nvim 0.12+), shipping Telescope, Treesitter, LSP + completion, gitsigns, which-key. Local customizations are marked with comments and keep the upstream lines commented out beside them.
+
+- **Install**: neovim is installed via [bob](https://github.com/MordechaiHadad/bob) (`bob use stable`), itself installed via `cargo install bob-nvim`. `requirements` bootstraps rustup if absent (all under `$HOME`, no sudo). `zshrc` adds `~/.cargo/bin` and `~/.local/share/bob/nvim-bin` to PATH.
+- **Clipboard**: no plugin. `'clipboard'` is left empty so normal yanks stay local; only `"+y`/`"+p` hit the system clipboard, routed through pbcopy/pbpaste locally and OSC52 over SSH (replaces the old `vim-oscyank`). The `unnamedplus` line from kickstart is commented out.
+- **Ported from old vimrc**: `relativenumber`, 4-space expandtab fallback (guess-indent auto-detects per file), `<C-j>`/`<C-k>` = jump 3 lines + center (overrides kickstart's window-focus maps; use `<C-h>`/`<C-l>` for windows).
+- **`vim`/`vi`** are aliased to `nvim` in zshrc; `EDITOR`/`VISUAL` = `nvim`. The `~/.vimrc` link remains as a fallback for the real vim binary.
+- **zellij scrollback** (`templates/zellij/zellij_scrollback.sh`): opens the ANSI dump as a normal buffer (lazy render, instant, full history) and colorizes it with `baleia.nvim` instead of piping through a terminal. `baleia` is added via `vim.pack` but only invoked by this script.
 
 ## Notable zshrc Behaviors
 
