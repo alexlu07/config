@@ -24,7 +24,13 @@ do
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
+
+  -- Fallback indentation for new/empty files; guess-indent.nvim auto-detects
+  -- and overrides these per file based on existing content.
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
+  vim.o.expandtab = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -36,7 +42,7 @@ do
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
   --  See `:help 'clipboard'`
-  vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
+  -- vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
   -- Enable break indent
   vim.o.breakindent = true
@@ -137,16 +143,28 @@ do
   --  Use CTRL+<hjkl> to switch between windows
   --
   --  See `:help wincmd` for a list of all window commands
-  vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+  -- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  -- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  -- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  -- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- <C-j>/<C-k> jump 3 lines and recenter (ported from old vimrc); window focus
+  -- is still available via <C-h>/<C-l> above.
+  vim.keymap.set('n', '<C-j>', '3jzz', { desc = 'Down 3 lines and center' })
+  vim.keymap.set('n', '<C-k>', '3kzz', { desc = 'Up 3 lines and center' })
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
   -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
   -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
   -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+
+  -- Yank to system clipboard
+  vim.keymap.set({ 'n', 'x' }, '<leader>y', '"+y', { desc = "Yank to system clipboard" })
+  vim.keymap.set('n', '<leader>Y', '"+Y', { desc = "Yank line to system clipboard" })
+
+  vim.keymap.set({ 'n', 'x' }, '<leader>p', '"+p', { desc = "Paste from system clipboard" })
+  vim.keymap.set({ 'n', 'x' }, '<leader>P', '"+P', { desc = "Paste before from system clipboard" })
 
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
@@ -302,6 +320,8 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+  vim.pack.add { gh 'nyoom-engineering/oxocarbon.nvim' }
+
   vim.pack.add { gh 'folke/tokyonight.nvim' }
   ---@diagnostic disable-next-line: missing-fields
   require('tokyonight').setup {
@@ -313,7 +333,7 @@ do
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'oxocarbon'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -330,11 +350,11 @@ do
   --  - yiiq - [Y]ank [I]nside [I]+1 [Q]uote
   --  - ci'  - [C]hange [I]nside [']quote
   require('mini.ai').setup {
-    -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
-    mappings = {
-      around_next = 'aa',
-      inside_next = 'ii',
-    },
+    -- -- NOTE: Avoid conflicts with the built-in incremental selection mappings on Neovim>=0.12 (see `:help treesitter-incremental-selection`)
+    -- mappings = {
+    --   around_next = 'aa',
+    --   inside_next = 'ii',
+    -- },
     n_lines = 500,
   }
 
@@ -431,8 +451,8 @@ do
   vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
   vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
   vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-  vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-  vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+  vim.keymap.set('n', '<leader>sr', builtin.oldfiles, { desc = '[S]earch [R]ecent Files' })
+  vim.keymap.set('n', '<leader>s.', builtin.resume, { desc = '[S]earch Resume ("." for repeat)' })
   vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
   vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
@@ -605,11 +625,18 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
-    -- gopls = {},
-    -- pyright = {},
-    -- rust_analyzer = {},
-    --
+    clangd = {},
+    gopls = {},
+    pyright = {},
+    rust_analyzer = {},
+    ts_ls = {},
+    jdtls = {},
+    html = {},
+    cssls = {},
+    jsonls = {},
+    yamlls = {},
+    bashls = {},
+
     -- Some languages (like typescript) have entire language plugins that can be useful:
     --    https://github.com/pmizio/typescript-tools.nvim
     --
@@ -692,29 +719,45 @@ do
   vim.pack.add { gh 'stevearc/conform.nvim' }
   require('conform').setup {
     notify_on_error = false,
-    format_on_save = function(bufnr)
-      -- You can specify filetypes to autoformat on save here:
-      local enabled_filetypes = {
-        -- lua = true,
-        -- python = true,
-      }
-      if enabled_filetypes[vim.bo[bufnr].filetype] then
-        return { timeout_ms = 500 }
-      else
-        return nil
-      end
-    end,
+    -- format_on_save = function(bufnr)
+    --   -- You can specify filetypes to autoformat on save here:
+    --   local enabled_filetypes = {
+    --     python = true,
+    --     rust = true,
+    --     c = true,
+    --     cpp = true,
+    --     java = true,
+    --     javascript = true,
+    --     typescript = true,
+    --     html = true,
+    --     css = true,
+    --     json = true,
+    --     yaml = true,
+    --     sh = true,
+    --   }
+    --   if enabled_filetypes[vim.bo[bufnr].filetype] then
+    --     return { timeout_ms = 500 }
+    --   else
+    --     return nil
+    --   end
+    -- end,
     default_format_opts = {
       lsp_format = 'fallback', -- Use external formatters if configured below, otherwise use LSP formatting. Set to `false` to disable LSP formatting entirely.
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
-      -- rust = { 'rustfmt' },
-      -- Conform can also run multiple formatters sequentially
-      -- python = { "isort", "black" },
-      --
-      -- You can use 'stop_after_first' to run the first available formatter from the list
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      python = { "ruff_format" }, -- or {"isort", "black"}
+      rust = { "rustfmt" },
+      c = { "clang_format" },
+      cpp = { "clang_format" },
+      java = { "google_java_format" },
+      javascript = { "prettierd" },
+      typescript = { "prettierd" },
+      html = { "prettierd" },
+      css = { "prettierd" },
+      json = { "prettierd" },
+      yaml = { "prettierd" },
+      sh = { "shfmt" },
     },
   }
 
@@ -817,7 +860,27 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = {
+    "bash",
+    "c",
+    "cpp",
+    "rust",
+    "python",
+    "lua",
+    "javascript",
+    "typescript",
+    "html",
+    "css",
+    "json",
+    "yaml",
+    "markdown",
+    "markdown_inline",
+    "diff",
+    "vim",
+    "vimdoc",
+    "query",
+  }
+
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
@@ -863,6 +926,9 @@ do
       end
     end,
   })
+
+  vim.keymap.set({ 'x', 'o' }, 'am', 'an', { remap = true, desc = "Treesitter: Around node" })
+  vim.keymap.set({ 'x', 'o' }, 'im', 'in', { remap = true, desc = "Treesitter: Inner node" })
 end
 
 -- ============================================================
