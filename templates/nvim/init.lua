@@ -932,7 +932,34 @@ do
 end
 
 -- ============================================================
--- SECTION 9: OPTIONAL EXAMPLES / NEXT STEPS
+-- SECTION 9: Neo-Tree
+-- File tree
+-- ============================================================
+
+do
+  vim.pack.add({
+    {
+      src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+      version = vim.version.range('3')
+    },
+    -- dependencies
+    "https://github.com/nvim-lua/plenary.nvim",
+    "https://github.com/MunifTanjim/nui.nvim",
+    -- optional, but recommended
+    "https://github.com/nvim-tree/nvim-web-devicons",
+  })
+
+
+  require('neo-tree').setup {
+      close_if_last_window = true, -- Close Neo-tree if it is the last window left in the tab
+  }
+
+  vim.keymap.set('n', '<leader>n', '<cmd>Neotree position=float toggle=true reveal=true<CR>')
+end
+
+
+-- ============================================================
+-- SECTION 10: OPTIONAL EXAMPLES / NEXT STEPS
 -- kickstart.plugins.* examples
 -- ============================================================
 do
