@@ -149,10 +149,26 @@ if ! command -v bob >/dev/null 2>&1; then
 else
     echo "bob is already installed"
 fi
-bob use stable
+# bob use stable
 
 # neovim tooling: rg = telescope live_grep, fd = telescope find_files,
 # tree-sitter = nvim-treesitter parser compilation (TSUpdate)
 command -v rg >/dev/null 2>&1 || cargo install ripgrep
 command -v fd >/dev/null 2>&1 || cargo install fd-find
 command -v tree-sitter >/dev/null 2>&1 || cargo install tree-sitter-cli
+
+# portal (zellij project session switcher, WASM plugin) -- built from
+# source with the wasm32-wasip1 target. Installed to ~/.local/share/zellij/plugins
+# (NOT ~/.config/zellij/plugins, which is a dotbot symlink that would be clobbered
+# on first link) and referenced from there in zellij/config.kdl.
+if [ ! -f "$HOME/.local/share/zellij/plugins/portal.wasm" ]; then
+    echo "Installing portal"
+    rustup target add wasm32-wasip1
+    portal_tmp="$(mktemp -d)"
+    git clone --depth 1 https://github.com/alexlu07/zellij-portal.git "$portal_tmp"
+    make -C "$portal_tmp" install PLUGIN_DIR="$HOME/.local/share/zellij/plugins"
+    rm -rf "$portal_tmp"
+    echo "Installed portal successfully"
+else
+    echo "portal is already installed"
+fi

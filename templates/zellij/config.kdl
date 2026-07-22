@@ -4,9 +4,9 @@ keybinds clear-defaults=true {
         // uncomment this and adjust key if using copy_on_select=false
         // bind "Alt c" { Copy; }
         bind "Alt e" { EditScrollback { ansi true; }; }
-        bind "Alt t" { NewTab; SwitchToMode "Normal"; }
+        bind "Alt n" { NewTab; SwitchToMode "Normal"; }
         bind "Alt s" {
-            LaunchOrFocusPlugin "session-manager" {
+            LaunchOrFocusPlugin "portal" {
                 floating true
                 move_to_focused_tab true
             };
@@ -120,8 +120,8 @@ keybinds clear-defaults=true {
         bind "Esc" { UndoRenamePane; SwitchToMode "Pane"; }
     }
     session {
-        bind "Ctrl o" { SwitchToMode "Normal"; }
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
+        bind "Ctrl s" { SwitchToMode "Normal"; }
+        // bind "Ctrl s" { SwitchToMode "Scroll"; }
         bind "d" { Detach; }
         bind "w" {
             LaunchOrFocusPlugin "session-manager" {
@@ -193,7 +193,7 @@ keybinds clear-defaults=true {
         bind "Ctrl g" { TogglePaneFrames; SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
         bind "Alt `" { ToggleFloatingPanes; }
-        bind "Alt n" { NewPane; }
+        bind "Alt t" { NewPane; }
         bind "Alt i" { MoveTab "Left"; }
         bind "Alt o" { MoveTab "Right"; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
@@ -208,7 +208,7 @@ keybinds clear-defaults=true {
         bind "Alt Shift p" { ToggleGroupMarking; }
     }
     shared_except "normal" "locked" {
-        bind "Enter" "Esc" "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Enter" "Esc" "Ctrl c" "q" { SwitchToMode "Normal"; }
     }
     shared_except "pane" "locked" {
         bind "Ctrl p" { SwitchToMode "Pane"; }
@@ -216,11 +216,11 @@ keybinds clear-defaults=true {
     shared_except "resize" "locked" {
         bind "Ctrl n" { SwitchToMode "Resize"; }
     }
-    shared_except "scroll" "locked" {
-        bind "Ctrl s" { SwitchToMode "Scroll"; }
-    }
+    // shared_except "scroll" "locked" {
+    //     bind "Ctrl s" { SwitchToMode "Scroll"; }
+    // }
     shared_except "session" "locked" {
-        bind "Ctrl o" { SwitchToMode "Session"; }
+        bind "Ctrl s" { SwitchToMode "Session"; }
     }
     shared_except "tab" "locked" {
         bind "Ctrl t" { SwitchToMode "Tab"; }
@@ -252,6 +252,16 @@ plugins {
     configuration location="zellij:configuration"
     plugin-manager location="zellij:plugin-manager"
     about location="zellij:about"
+    portal location="file:~/.local/share/zellij/plugins/portal.wasm" {
+        scan_paths "~/Desktop"
+        start_mode "normal"
+        hide_floating_panes "true"
+#====== LINUX ======
+        cwd "/home/alexlu"
+#====== MAC ======
+        cwd "/Users/alexlu"
+#====== END ======
+    }
 }
 
 // Plugins to load in the background when a new session starts
@@ -299,6 +309,8 @@ load_plugins {
 //   - false
 //
 // auto_layout true
+
+session_name "main"
 
 // Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
 // (Requires restart)
@@ -353,7 +365,7 @@ theme "sakura"
 // Default: "default"
 // (Requires restart)
 //
-// default_layout "compact"
+default_layout "layout"
 
 // Choose the mode that zellij uses when starting up.
 // Default: normal

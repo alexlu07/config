@@ -213,7 +213,7 @@ home() {
 if [ "$TERM_PROGRAM" = "vscode" ]; then
     home
 else
-    cd ~/Desktop
+    # cd ~/Desktop
 fi
 
 # enable fzf key bindings or smth
@@ -331,11 +331,17 @@ export NVM_DIR="$HOME/.nvm"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# Keep zellij's IPC socket path short. The socket lives at
+# $ZELLIJ_SOCKET_DIR/<version>/<session> and macOS caps sun_path at 104 bytes;
+# the default $TMPDIR (/var/folders/.../T) is long enough that moderately named
+# sessions overflow it ("IPC socket path is too long"). A short dir fixes it.
+export ZELLIJ_SOCKET_DIR=/tmp/zellij
+
 # Auto attach to zellij if not already inside one
 if [ "$TERM_PROGRAM" != "vscode" ]; then
     if command -v zellij &>/dev/null; then
         if [ -z "$ZELLIJ" ]; then
-            zellij attach main 2>/dev/null || zellij -s main
+            zellij attach || zellij
         fi
     fi
 fi
