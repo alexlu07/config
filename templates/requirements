@@ -149,7 +149,7 @@ if ! command -v bob >/dev/null 2>&1; then
 else
     echo "bob is already installed"
 fi
-# bob use stable
+bob use stable
 
 # neovim tooling: rg = telescope live_grep, fd = telescope find_files,
 # tree-sitter = nvim-treesitter parser compilation (TSUpdate)
