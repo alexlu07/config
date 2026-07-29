@@ -136,6 +136,20 @@ else
 fi
 bob use stable
 
+# clang -- tree-sitter-cli pulls in rquickjs-sys, which bindgens against
+# libclang at build time. A stray libclang1 from some other tool (with no
+# headers) is enough to make bindgen fail with a confusing "stdbool.h not
+# found" error, so make sure the full clang package is present first.
+if ! command -v clang >/dev/null 2>&1; then
+    echo "Installing clang"
+#====== LINUX ======
+    sudo apt install -y clang >/dev/null
+#====== MAC ======
+    : # clang ships with the Xcode Command Line Tools
+#====== END ======
+    echo "Installed clang successfully"
+fi
+
 # neovim tooling: rg = telescope live_grep, fd = telescope find_files,
 # tree-sitter = nvim-treesitter parser compilation (TSUpdate)
 command -v rg >/dev/null 2>&1 || cargo install ripgrep
