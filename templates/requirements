@@ -83,21 +83,6 @@ else
 fi
 #====== END ======
 
-# Zellij
-if ! command -v zellij >/dev/null 2>&1; then
-    echo "Installing Zellij"
-
-#====== LINUX ======
-    sudo snap install zellij --classic >/dev/null
-#====== MAC ======
-    brew install zellij >/dev/null
-#====== END ======
-
-    echo "Installed Zellij sucessfully"
-else
-    echo "Zellij is already installed"
-fi
-
 # tmux
 if ! command -v tmux >/dev/null 2>&1; then
     echo "Installing tmux"
@@ -156,6 +141,22 @@ bob use stable
 command -v rg >/dev/null 2>&1 || cargo install ripgrep
 command -v fd >/dev/null 2>&1 || cargo install fd-find
 command -v tree-sitter >/dev/null 2>&1 || cargo install tree-sitter-cli
+
+# Zellij -- pinned to match the zellij-tile version portal is built against
+# (keep in sync with zellij-portal's Cargo.toml). Installed from crates.io into
+# ~/.cargo/bin (already on PATH); version-checked so a mismatched binary gets
+# replaced. Runtime version must equal the plugin's API version or GetSessionList
+# panics the plugin (see zellij 0.44.2 changelog, which fixed that host command).
+ZELLIJ_VERSION="0.44.3"
+current_zellij=""
+command -v zellij >/dev/null 2>&1 && current_zellij="$(zellij --version | awk '{print $2}')"
+if [ "$current_zellij" != "$ZELLIJ_VERSION" ]; then
+    echo "Installing Zellij $ZELLIJ_VERSION"
+    cargo install --locked --version "$ZELLIJ_VERSION" zellij
+    echo "Installed Zellij $ZELLIJ_VERSION successfully"
+else
+    echo "Zellij $ZELLIJ_VERSION is already installed"
+fi
 
 # portal (zellij project session switcher, WASM plugin) -- built from
 # source with the wasm32-wasip1 target. Installed to ~/.local/share/zellij/plugins
