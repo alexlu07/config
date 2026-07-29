@@ -253,13 +253,14 @@ plugins {
     plugin-manager location="zellij:plugin-manager"
     about location="zellij:about"
     portal location="file:~/.local/share/zellij/plugins/portal.wasm" {
-        scan_paths "~/Desktop"
         start_mode "normal"
         hide_floating_panes "true"
 #====== LINUX ======
         cwd "/home/alexlu"
+        scan_paths "~/Desktop, ~/Documents"
 #====== MAC ======
         cwd "/Users/alexlu"
+        scan_paths "~/Desktop"
 #====== END ======
     }
 }
