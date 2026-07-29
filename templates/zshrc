@@ -341,7 +341,7 @@ export ZELLIJ_SOCKET_DIR=/tmp/zellij
 if [ "$TERM_PROGRAM" != "vscode" ]; then
     if command -v zellij &>/dev/null; then
         if [ -z "$ZELLIJ" ]; then
-            zellij attach || zellij
+            zellij attach main || zellij
         fi
     fi
 fi
