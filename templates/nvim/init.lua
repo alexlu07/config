@@ -37,6 +37,7 @@ require 'plugins.blink-cmp'
 require 'plugins.treesitter'
 require 'plugins.neo-tree'
 require 'plugins.diffview'
+require 'plugins.fugitive'
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
