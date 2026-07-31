@@ -50,6 +50,6 @@ require('neo-tree').setup {
   },
 }
 
-vim.keymap.set('n', '<leader>n', '<cmd>Neotree position=float toggle=true reveal=true<CR>')
+vim.keymap.set('n', '<leader>f', '<cmd>Neotree position=float toggle=true reveal=true<CR>', { desc = '[F]ile tree' })
 
 -- vim: ts=2 sts=2 sw=2 et

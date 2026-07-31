@@ -46,6 +46,8 @@ require('conform').setup {
   },
 }
 
-vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
+-- kickstart binds this to `<leader>f`; moved to `<leader>F` so neo-tree can
+-- have `<leader>f` ([F]iles).
+vim.keymap.set({ 'n', 'v' }, '<leader>F', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
 
 -- vim: ts=2 sts=2 sw=2 et
