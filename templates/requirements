@@ -126,6 +126,18 @@ else
 fi
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+# cargo-binstall -- fetches prebuilt crate binaries instead of building them.
+# Bootstrapped from its own prebuilt release; `cargo install cargo-binstall`
+# would compile a large dep tree, defeating the point.
+if ! command -v cargo-binstall >/dev/null 2>&1; then
+    echo "Installing cargo-binstall"
+    curl -L --proto '=https' --tlsv1.2 -sSf \
+        https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+    echo "Installed cargo-binstall successfully"
+else
+    echo "cargo-binstall is already installed"
+fi
+
 # bob (neovim version manager) -- downloads prebuilt neovim, no sudo
 if ! command -v bob >/dev/null 2>&1; then
     echo "Installing bob"
@@ -136,25 +148,11 @@ else
 fi
 bob use stable
 
-# clang -- tree-sitter-cli pulls in rquickjs-sys, which bindgens against
-# libclang at build time. A stray libclang1 from some other tool (with no
-# headers) is enough to make bindgen fail with a confusing "stdbool.h not
-# found" error, so make sure the full clang package is present first.
-if ! command -v clang >/dev/null 2>&1; then
-    echo "Installing clang"
-#====== LINUX ======
-    sudo apt install -y clang >/dev/null
-#====== MAC ======
-    : # clang ships with the Xcode Command Line Tools
-#====== END ======
-    echo "Installed clang successfully"
-fi
-
 # neovim tooling: rg = telescope live_grep, fd = telescope find_files,
 # tree-sitter = nvim-treesitter parser compilation (TSUpdate)
 command -v rg >/dev/null 2>&1 || cargo install ripgrep
 command -v fd >/dev/null 2>&1 || cargo install fd-find
-command -v tree-sitter >/dev/null 2>&1 || cargo install tree-sitter-cli
+command -v tree-sitter >/dev/null 2>&1 || cargo binstall tree-sitter-cli
 
 # Zellij -- pinned to match the zellij-tile version portal is built against
 # (keep in sync with zellij-portal's Cargo.toml). Installed from crates.io into
