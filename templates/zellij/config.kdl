@@ -258,6 +258,7 @@ plugins {
 #====== LINUX ======
         cwd "/home/alexlu"
         scan_paths "~/Desktop, ~/Documents"
+        scan_depth 5
 #====== MAC ======
         cwd "/Users/alexlu"
         scan_paths "~/Desktop"
