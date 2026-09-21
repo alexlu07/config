@@ -64,10 +64,6 @@ git submodule update --init --recursive "${DOTBOT_DIR}"
 # Symlink configs
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "configs/install.conf.yaml" "${@}"
 
-# Init conda shell integration
-source ~/miniconda3/bin/activate
-conda init --all
-
 # Install VSCode extension
 if command -v code &> /dev/null; then
     echo "Installing VSCode extensions"

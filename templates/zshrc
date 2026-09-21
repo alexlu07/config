@@ -294,42 +294,37 @@ export SHELL='/bin/zsh'
 
 # JINA_CLI_END
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
+# Lazy-load Conda on first use
+conda() {
+    unfunction conda
 #====== LINUX ======
-__conda_setup="$('/home/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/alexlu/miniconda3/bin:$PATH"
-    fi
-fi
+    source "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
 #====== MAC ======
-__conda_setup="$('/Users/alexlu/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/alexlu/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/alexlu/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/alexlu/miniconda3/bin:$PATH"
-    fi
-fi
+    source "/Users/alexlu/miniconda3/etc/profile.d/conda.sh"
 #====== END ======
-unset __conda_setup
-# <<< conda initialize <<<
-
+    conda "$@"
+}
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+_load_nvm() {
+    unfunction nvm node npm npx _load_nvm 2>/dev/null
+    source "$NVM_DIR/nvm.sh"
+}
+
+nvm()  { _load_nvm; nvm "$@" }
+node() { _load_nvm; node "$@" }
+npm()  { _load_nvm; npm "$@" }
+npx()  { _load_nvm; npx "$@" }
+
 export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+export PATH="$SDKMAN_DIR/candidates/java/current/bin:$PATH"
+
+sdk() {
+    unfunction sdk
+    source "$SDKMAN_DIR/bin/sdkman-init.sh"
+    sdk "$@"
+}
 
 # Keep zellij's IPC socket path short. The socket lives at
 # $ZELLIJ_SOCKET_DIR/<version>/<session> and macOS caps sun_path at 104 bytes;
