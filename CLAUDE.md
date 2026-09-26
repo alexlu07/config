@@ -13,23 +13,21 @@ A personal dotfiles repository managed by [dotbot](https://github.com/anishathal
 ./install
 ```
 
-`install` generates OS-specific configs from `templates/`, runs the generated `configs/requirements`, inits the dotbot submodule, symlinks all configs, and runs macOS-only post-install steps.
+`install` is a Python script that generates machine-specific configs from `templates/`, runs the generated `configs/requirements`, initializes the dotbot submodule, symlinks all configs, and installs the VSCode extension when `code` is available. Use `./install --render-only` to generate configs without applying them.
 
 ## How the OS Marker System Works
 
-Source files live in `templates/`. Files with OS-specific content use `#@os:` block markers:
+Source files live in `templates/`. Files with OS-specific content use tag markers:
 
 ```
-#@os:mac
+#====== MAC ======
 ...lines only on macOS (Darwin)...
-#@os:end
-
-#@os:linux
+#====== LINUX ======
 ...lines only on Linux...
-#@os:end
+#====== END ======
 ```
 
-`./install` detects `uname -s`, strips the other OS's blocks via `awk`, and writes plain output files into `configs/`. The `configs/` directory is gitignored.
+`./install` detects `LINUX` or `MAC`, reads optional custom tags from the gitignored `tags` file, and writes plain output files into `configs/`. Same-depth markers are alternatives, `ELSE` supplies a fallback, and deeper markers create nested conditions. See `TAGS.md` for examples. The `configs/` directory is gitignored.
 
 Dotbot is called with `configs/install.conf.yaml`, which links from `configs/` for all files.
 

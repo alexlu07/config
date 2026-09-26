@@ -7,7 +7,11 @@ if ! command -v ghostty >/dev/null 2>&1; then
     echo "Installing Ghostty"
 
 #====== LINUX ======
+###====== NO_SUDO ======
+    echo "Skipping Ghostty: this Linux machine has no sudo access"
+###====== ELSE ======
     sudo /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)" > /dev/null
+###====== END ======
 #====== MAC ======
     open "https://ghostty.org/download"
 
@@ -40,7 +44,7 @@ if ! command -v zsh >/dev/null 2>&1; then
     brew install zsh >/dev/null
 #====== END ======
 
-    echo "Installed zsh sucessfully"
+    echo "Installed zsh successfully"
 else
     echo "zsh is already installed"
 fi
@@ -93,7 +97,7 @@ if ! command -v tmux >/dev/null 2>&1; then
     brew install tmux >/dev/null
 #====== END ======
 
-    echo "Installed tmux sucessfully"
+    echo "Installed tmux successfully"
 else
     echo "tmux is already installed"
 fi

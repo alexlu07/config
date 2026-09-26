@@ -1,73 +1,140 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+"""Render tagged dotfiles, install dependencies, and link the configuration."""
 
-set -e
+import re
+import shutil
+import stat
+import subprocess
+import sys
+from pathlib import Path
+from platform import system
 
-DOTBOT_DIR="dotbot"
-DOTBOT_BIN="bin/dotbot"
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Detect OS
-OS=$(uname -s)
-[ "$OS" = "Darwin" ] && TAG="mac" || TAG="linux"
+MARKER = re.compile(r"^(#+)={6,} ([A-Z][A-Z0-9_-]*) ={6,}\s*$")
+TAG = re.compile(r"[A-Z][A-Z0-9_-]*\Z")
 
-# Generate OS-specific configs from templates/
-echo "Generating configs for: $TAG"
-mkdir -p "${BASEDIR}/configs"
 
-process_file() {
-    local src="$1" dst="$2"
-    awk -v os="$TAG" '
-        /^#=+ [A-Z]+ =+/ {
-            tag = tolower($2)
-            if (tag == "end") { skip = 0 }
-            else { skip = (tag != os) }
-            next
-        }
-        !skip { print }
-    ' "$src" > "$dst"
-}
+class Block:
+    def __init__(self, depth, parent_active, matched, active):
+        self.depth = depth
+        self.parent_active = parent_active
+        self.matched = matched
+        self.active = active
+        self.else_seen = False
 
-process_dir() {
-    local src="$1" dst="$2"
-    mkdir -p "$dst"
-    for entry in "$src"/*; do
-        [ -e "$entry" ] || continue
-        local name; name=$(basename "$entry")
-        if [ -d "$entry" ]; then
-            process_dir "$entry" "$dst/$name"
-        else
-            process_file "$entry" "$dst/$name"
-        fi
-    done
-}
 
-for src in "${BASEDIR}"/templates/*; do
-    name=$(basename "$src")
-    if [ -d "$src" ]; then
-        process_dir "$src" "${BASEDIR}/configs/$name"
-    else
-        process_file "$src" "${BASEDIR}/configs/$name"
-    fi
-done
-chmod +x "${BASEDIR}/configs/requirements"
-find "${BASEDIR}/configs" -name "*.sh" -exec chmod +x {} \;
-echo "  configs/ generated"
+def active_tags(tags_file, os_name):
+    if os_name not in {"Darwin", "Linux"}:
+        raise ValueError(f"unsupported OS: {os_name}")
+    os_tag = "MAC" if os_name == "Darwin" else "LINUX"
+    tags = set(tags_file.read_text().split()) if tags_file.exists() else set()
+    for tag in tags:
+        if not TAG.fullmatch(tag):
+            raise ValueError(f"invalid tag {tag!r} in {tags_file}")
+        if tag in {"MAC", "LINUX", "ELSE", "END"}:
+            raise ValueError(f"{tag} is reserved and cannot appear in {tags_file}")
+    return tags | {os_tag}
 
-# Install dependencies
-bash "${BASEDIR}/configs/requirements"
 
-# Init dotbot submodule
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
+def render(source, tags, name="<template>"):
+    blocks = []
+    output = []
+    for line_number, line in enumerate(source.splitlines(keepends=True), 1):
+        marker = MARKER.fullmatch(line.rstrip("\r\n"))
+        if marker is None:
+            if not blocks or blocks[-1].active:
+                output.append(line)
+            continue
 
-# Symlink configs
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "configs/install.conf.yaml" "${@}"
+        depth, keyword = len(marker.group(1)), marker.group(2)
 
-# Install VSCode extension
-if command -v code &> /dev/null; then
-    echo "Installing VSCode extensions"
-    code --install-extension alexlu07.vscode-pathfinder
-else
-    echo "VSCode is not installed, skipping extension installation."
-fi
+        def error(message):
+            return ValueError(f"{name}:{line_number}: {message}")
+
+        if keyword == "END":
+            if not blocks or blocks[-1].depth != depth:
+                raise error("END has no open block at this depth")
+            blocks.pop()
+        elif keyword == "ELSE":
+            if not blocks or blocks[-1].depth != depth:
+                raise error("ELSE has no open block at this depth")
+            block = blocks[-1]
+            if block.else_seen:
+                raise error("duplicate ELSE")
+            block.active = block.parent_active and not block.matched
+            block.matched = True
+            block.else_seen = True
+        elif blocks and blocks[-1].depth == depth:
+            block = blocks[-1]
+            if block.else_seen:
+                raise error("tag after ELSE")
+            block.active = block.parent_active and not block.matched and keyword in tags
+            block.matched |= keyword in tags
+        else:
+            if (blocks and depth <= blocks[-1].depth) or (not blocks and depth != 1):
+                raise error("nested block must be deeper than its parent")
+            parent_active = blocks[-1].active if blocks else True
+            selected = keyword in tags
+            blocks.append(Block(depth, parent_active, selected, parent_active and selected))
+
+    if blocks:
+        raise ValueError(f"{name}: missing END for block at depth {blocks[-1].depth}")
+    return "".join(output)
+
+
+def render_tree(source_dir, output_dir, tags):
+    # Parse everything before writing, so a malformed marker cannot leave a
+    # partially updated set of generated configs.
+    rendered = {}
+    for source in source_dir.rglob("*"):
+        if not source.is_file() or any(part.startswith(".") for part in source.relative_to(source_dir).parts):
+            continue
+        rendered[source.relative_to(source_dir)] = render(source.read_text(), tags, str(source))
+    for relative, content in rendered.items():
+        destination = output_dir / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        destination.write_text(content)
+
+
+def make_executable(path):
+    path.chmod(path.stat().st_mode | stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+
+
+def main():
+    base_dir = Path(__file__).resolve().parent
+    args = sys.argv[1:]
+    render_only = args == ["--render-only"]
+    tags = active_tags(base_dir / "tags", system())
+    print(f"Generating configs for: {', '.join(sorted(tags))}", flush=True)
+    config_dir = base_dir / "configs"
+    render_tree(base_dir / "templates", config_dir, tags)
+    make_executable(config_dir / "requirements")
+    for script in config_dir.rglob("*.sh"):
+        make_executable(script)
+    print("  configs/ generated", flush=True)
+
+    if render_only:
+        return
+
+    subprocess.run(["bash", str(config_dir / "requirements")], check=True)
+    subprocess.run(["git", "-C", "dotbot", "submodule", "sync", "--quiet", "--recursive"], cwd=base_dir, check=True)
+    subprocess.run(["git", "submodule", "update", "--init", "--recursive", "dotbot"], cwd=base_dir, check=True)
+    subprocess.run(
+        [str(base_dir / "dotbot/bin/dotbot"), "-d", str(base_dir), "-c", "configs/install.conf.yaml", *args],
+        cwd=base_dir,
+        check=True,
+    )
+    if shutil.which("code"):
+        print("Installing VSCode extensions", flush=True)
+        subprocess.run(["code", "--install-extension", "alexlu07.vscode-pathfinder"], check=True)
+    else:
+        print("VSCode is not installed, skipping extension installation.")
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+    except subprocess.CalledProcessError as exc:
+        raise SystemExit(exc.returncode) from exc
