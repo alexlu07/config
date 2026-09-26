@@ -103,7 +103,7 @@ else
 fi
 
 #conda
-if ! command -v conda >/dev/null 2>&1; then
+if [ ! -x "$HOME/miniconda3/bin/conda" ]; then
     echo "Installing Miniconda3"
     mkdir -p ~/miniconda3
 

@@ -256,8 +256,13 @@ plugins {
         start_mode "normal"
         hide_floating_panes "true"
 #====== LINUX ======
+###====== UTCS ======
+        cwd "/u/alexlu"
+        scan_paths "/scratch/cluster/alexlu, ~/Desktop/"
+###====== ELSE ======
         cwd "/home/alexlu"
         scan_paths "~/Desktop, ~/Documents"
+###====== END ======
         scan_depth 5
 #====== MAC ======
         cwd "/Users/alexlu"
@@ -422,7 +427,11 @@ default_layout "layout"
 //
 // scrollback_editor "/usr/bin/vim"
 #====== LINUX ======
+###====== UTCS ======
+scrollback_editor "/u/alexlu/.config/zellij/zellij_scrollback.sh"
+###====== ELSE ======
 scrollback_editor "/home/alexlu/.config/zellij/zellij_scrollback.sh"
+###====== END ======
 #====== MAC ======
 scrollback_editor "/Users/alexlu/.config/zellij/zellij_scrollback.sh"
 #====== END ======

@@ -1,3 +1,11 @@
+#====== UTCS ======
+# these linux computers are dumb and have . in path
+export PATH=$(printf "%s\n" "$PATH" | tr ':' '\n' | grep -vx '.' | paste -sd:)
+
+# scratch
+hash -d s=/scratch/cluster/alexlu
+#====== END ======
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -147,6 +155,11 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # bin
 export PATH="$HOME/bin:$PATH"
+
+#====== UTCS ======
+# pwndbg
+export PATH="$HOME/bin/pwndbg-gdb/bin:$PATH"
+#====== END ======
 
 # rust + bob-managed neovim
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -298,7 +311,7 @@ export SHELL='/bin/zsh'
 conda() {
     unfunction conda
 #====== LINUX ======
-    source "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
+    source "/u/alexlu/miniconda3/etc/profile.d/conda.sh"
 #====== MAC ======
     source "/Users/alexlu/miniconda3/etc/profile.d/conda.sh"
 #====== END ======
@@ -340,3 +353,7 @@ if [ "$TERM_PROGRAM" != "vscode" ]; then
         fi
     fi
 fi
+
+#====== NO_SUDO ======
+export TERM=xterm
+#====== END ======
