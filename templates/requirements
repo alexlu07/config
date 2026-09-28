@@ -158,6 +158,25 @@ command -v rg >/dev/null 2>&1 || cargo install ripgrep
 command -v fd >/dev/null 2>&1 || cargo install fd-find
 command -v tree-sitter >/dev/null 2>&1 || cargo binstall tree-sitter-cli
 
+# node/npm -- Mason needs npm for several LSP servers. Use nvm when npm is
+# unavailable; it installs Node.js and npm under $HOME without sudo.
+NODE_VERSION="22.14.0"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+if ! command -v npm >/dev/null 2>&1; then
+    if ! command -v nvm >/dev/null 2>&1; then
+        echo "Installing nvm"
+        curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.8/install.sh | PROFILE=/dev/null bash
+        . "$NVM_DIR/nvm.sh"
+    fi
+    echo "Installing Node.js $NODE_VERSION with nvm"
+    nvm install "$NODE_VERSION"
+    nvm alias default "$NODE_VERSION"
+    echo "Installed Node.js $NODE_VERSION successfully"
+else
+    echo "npm is already installed"
+fi
+
 # Zellij -- pinned to match the zellij-tile version portal is built against
 # (keep in sync with zellij-portal's Cargo.toml). Installed from crates.io into
 # ~/.cargo/bin (already on PATH); version-checked so a mismatched binary gets
