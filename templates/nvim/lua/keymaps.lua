@@ -56,12 +56,12 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 
 -- <C-j>/<C-k> jump 3 lines and recenter (ported from old vimrc); window focus
 -- is still available via <C-h>/<C-l> above.
-vim.keymap.set('n', '<C-j>', '3jzz', { desc = 'Down 3 lines and center' })
-vim.keymap.set('n', '<C-k>', '3kzz', { desc = 'Up 3 lines and center' })
+vim.keymap.set('n', '<C-j>', '5jzz', { desc = 'Down 3 lines and center' })
+vim.keymap.set('n', '<C-k>', '5kzz', { desc = 'Up 3 lines and center' })
 
 -- center <C-u>/<C-d>
-vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move cursor up a half-page' })
-vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move cursor down a half-page' })
+-- vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Move cursor up a half-page' })
+-- vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Move cursor down a half-page' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })

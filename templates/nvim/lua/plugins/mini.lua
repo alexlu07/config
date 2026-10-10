@@ -39,6 +39,17 @@ statusline.setup { use_icons = vim.g.have_nerd_font }
 ---@diagnostic disable-next-line: duplicate-set-field
 statusline.section_location = function() return '%2l:%-2v' end
 
+local animate = require 'mini.animate'
+animate.setup {
+  cursor = {
+    enable = false,
+  },
+  scroll = {
+    -- Keep short scrolls responsive (3 lines take about 24 ms), while
+    -- capping the duration of larger scrolls at about 120 ms.
+    timing = function(_, n_steps) return math.min(120 / n_steps, 8) end,
+  },
+}
 -- ... and there is more!
 --  Check out: https://github.com/nvim-mini/mini.nvim
 
