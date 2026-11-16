@@ -311,7 +311,11 @@ export SHELL='/bin/zsh'
 conda() {
     unfunction conda
 #====== LINUX ======
+###====== UTCS ======
     source "/u/alexlu/miniconda3/etc/profile.d/conda.sh"
+###====== ELSE ======
+    source "/home/alexlu/miniconda3/etc/profile.d/conda.sh"
+###====== END ======
 #====== MAC ======
     source "/Users/alexlu/miniconda3/etc/profile.d/conda.sh"
 #====== END ======
