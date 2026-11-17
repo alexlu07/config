@@ -106,7 +106,7 @@ themes {
         }
         multiplayer_user_colors {
             player_1 120 70 255 // #7846ff
-            player_2 0 255 0 // #00ff00
+            player_2 0 255 255 // #00ff00
             player_3 0
             player_4 0 0 255 // #0000ff
             player_5 180 80 255 // #b450ff

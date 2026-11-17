@@ -13,8 +13,9 @@ vim.diagnostic.config {
   float = { border = 'rounded', source = 'if_many' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
-  -- Can switch between these as you prefer
-  virtual_text = true, -- Text shows up at the end of the line
+  -- Inline virtual text cannot wrap; read full messages in the floating window.
+  -- virtual_text = true, -- Text shows up at the end of the line
+  virtual_text = false,
   virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
   -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
@@ -28,6 +29,18 @@ vim.diagnostic.config {
     end,
   },
 }
+
+vim.keymap.set('n', '<leader>e', function() vim.diagnostic.open_float { scope = 'line' } end, { desc = 'Show line diagnostics' })
+vim.keymap.set('n', '<leader>yd', function()
+  local diagnostics = vim.diagnostic.get(0, { lnum = vim.api.nvim_win_get_cursor(0)[1] - 1 })
+  if #diagnostics == 0 then
+    vim.notify('No diagnostics on this line', vim.log.levels.INFO)
+    return
+  end
+  local messages = vim.tbl_map(function(diagnostic) return diagnostic.message end, diagnostics)
+  vim.fn.setreg('+', table.concat(messages, '\n\n'))
+  vim.notify('Copied line diagnostics to clipboard')
+end, { desc = 'Yank line diagnostics to clipboard' })
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 

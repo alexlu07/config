@@ -258,7 +258,7 @@ plugins {
 #====== LINUX ======
 ###====== UTCS ======
         cwd "/u/alexlu"
-        scan_paths "/scratch/cluster/alexlu, ~/Desktop/"
+        scan_paths "/scratch/cluster/alexlu, /u/alexlu/Desktop"
 ###====== ELSE ======
         cwd "/home/alexlu"
         scan_paths "~/Desktop, ~/Documents"
