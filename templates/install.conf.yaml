@@ -34,3 +34,7 @@
       force: true
       path: configs/ghostty
       create: true
+    ~/.config/nix:
+      force: true
+      path: configs/nix
+      create: true
