@@ -159,6 +159,10 @@ export PATH="$HOME/bin:$PATH"
 #====== UTCS ======
 # pwndbg
 export PATH="$HOME/bin/pwndbg-gdb/bin:$PATH"
+
+# uv
+export UV_CACHE_DIR=/scratch/cluster/alexlu/envs/cache/uv
+export UV_LINK_MODE=hardlink
 #====== END ======
 
 # rust + bob-managed neovim
